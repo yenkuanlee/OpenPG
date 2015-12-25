@@ -1,5 +1,7 @@
 先在master和slave做(0)設定
+
 (1)~(4) 可執行 $ python run_script.py local_ip remote_ip
+
 (5) 依照個人需求決定是否到slave做設定
 
 
