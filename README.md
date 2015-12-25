@@ -1,3 +1,11 @@
+先在master和slave做(0)設定
+(1)~(4) 可執行 $ python run_script.py local_ip remote_ip
+(5) 依照個人需求決定是否到slave做設定
+
+
+============================================================================================
+
+
 (0) master/slave的PG設定
 
 	$ sudo apt-get update
@@ -41,9 +49,12 @@
 	
 
 (5) open slave (on slave)
-
+	$ sudo service postgresql stop
+	
 	$ vi /etc/postgresql/9.3/main/pg_hba.conf
 
 		host    all             all             all            md5
 
+	$ sudo service postgresql start
+	
 	$ psql -U guest -h 10.10.21.19 -d openpg
