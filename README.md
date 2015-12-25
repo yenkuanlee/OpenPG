@@ -8,7 +8,7 @@
 .....................................................................................
 
 
-(0) master/slave的PG設定
+(0) master/slave的PG設定，讓彼此之間的postgres帳號可以互連
 
 	$ sudo apt-get update
 
@@ -31,7 +31,7 @@
 
 
 	
-(2) 多機PG設定
+(2) 多機PG設定(master/slave db同步，master可讀寫，slave只可讀)
 
 	$ sudo -u postgres python PGdeploy.py local_ip remote_ip
 
