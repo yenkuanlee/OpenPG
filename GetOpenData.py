@@ -232,7 +232,7 @@ for line in reader:
 		TID = "odtp.t"+str(Tnumber)
 		Tnumber += 1
 		sql_query = "insert into Table_List(tid,表格名稱,原始資料格式,欄位,網址,描述,更新頻率,更新時間,csv_skip_header,csv_delimiter,elem_tag) VALUES ('"+TID+"','"+table_name+"','csv','"+schema+"','"+url+"','"+discription+"','"+update_frequency+"',now(),'1',',','');"
-		conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+		conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
 		cur = conn.cursor()
 		cur.execute(sql_query)
 		conn.commit()
@@ -254,7 +254,7 @@ for line in reader:
 		TID = "odtp.t"+str(Tnumber)
                 Tnumber += 1
 		sql_query = "insert into Table_List(tid,表格名稱,原始資料格式,欄位,網址,描述,更新頻率,更新時間,csv_skip_header,csv_delimiter,elem_tag) VALUES ('"+TID+"','"+table_name+"','xml','"+schema+"','"+url+"','"+discription+"','"+update_frequency+"',now(),'1',',','"+ElemTag+"');"
-		conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+		conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
 		cur = conn.cursor()
 		cur.execute(sql_query)
 		conn.commit()
@@ -267,7 +267,7 @@ for line in reader:
 		TID = "odtp.t"+str(Tnumber)
                 Tnumber += 1
 		sql_query = "insert into Table_List(tid,表格名稱,原始資料格式,欄位,網址,描述,更新頻率,更新時間,csv_skip_header,csv_delimiter,elem_tag) VALUES ('"+TID+"','"+table_name+"','json','"+schema+"','"+url+"','"+discription+"','"+update_frequency+"',now(),'1',',','');"
-		conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+		conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
 		cur = conn.cursor()
 		cur.execute(sql_query)
 		conn.commit()
@@ -288,7 +288,7 @@ for line in reader:
 			TID = "odtp.t"+str(Tnumber)
 	                Tnumber += 1
 			sql_query = "insert into Table_List(tid,表格名稱,原始資料格式,欄位,網址,描述,更新頻率,更新時間,csv_skip_header,csv_delimiter,elem_tag) VALUES ('"+TID+"','"+table_name+"','csv','"+schema+"','"+url+"','"+discription+"','"+update_frequency+"',now(),'1',',','');"
-			conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+			conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
 			cur = conn.cursor()
 			cur.execute(sql_query)
 			conn.commit()
@@ -314,7 +314,7 @@ for line in reader:
 			TID = "odtp.t"+str(Tnumber)
 	                Tnumber += 1
 			sql_query = "insert into Table_List(tid,表格名稱,原始資料格式,欄位,網址,描述,更新頻率,更新時間,csv_skip_header,csv_delimiter,elem_tag) VALUES ('"+TID+"','"+table_name+"','xml','"+schema+"','"+url+"','"+discription+"','"+update_frequency+"',now(),'1',',','"+ElemTag+"');"
-			conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+			conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
 			cur = conn.cursor()
 			cur.execute(sql_query)
 			conn.commit()
@@ -330,7 +330,7 @@ for line in reader:
 			TID = "odtp.t"+str(Tnumber)
 	                Tnumber += 1
 			sql_query = "insert into Table_List(tid,表格名稱,原始資料格式,欄位,網址,描述,更新頻率,更新時間,csv_skip_header,csv_delimiter,elem_tag) VALUES ('"+TID+"','"+table_name+"','json','"+schema+"','"+url+"','"+discription+"','"+update_frequency+"',now(),'1',',','');"
-			conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+			conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
 			cur = conn.cursor()
 			cur.execute(sql_query)
 			conn.commit()

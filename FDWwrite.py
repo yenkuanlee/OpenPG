@@ -10,6 +10,9 @@ from logging import WARNING
 import csv
 import psycopg2
 
+IPset = set()
+IPset.add("172.16.8.5")
+
 class FDWwrite(ForeignDataWrapper):
 
     _startup_cost = 10
@@ -85,9 +88,12 @@ class FDWwrite(ForeignDataWrapper):
 			if line.split("\t")[0]==rowid:break
 		f.close()
 		os.system("sed -i \""+str(line_number)+"s/\t2...-.*-.* .*:.*:.*08\t/\t"+str(newvalues['更新時間'])+"\t/g\" "+self.filename)
-		conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+		#for ip in IPset:
+			#os.system("rsync -va --inplace --no-whole-file "+self.filename+" "+ip+":"+self.filename)
+		conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
         	cur = conn.cursor()
         	cur.execute("REFRESH MATERIALIZED VIEW "+rowid+" ;")
+		cur.execute("REFRESH MATERIALIZED VIEW opentable ;")
         	conn.commit()
         	conn.close()
 		#os.system("echo \""+str(rowid)+"\" >> /home/postgres/qqq.txt")
@@ -107,10 +113,12 @@ class FDWwrite(ForeignDataWrapper):
 	Dname = rowid+"\t"
 	Dname = Dname.encode('utf-8')
 	os.system("sed -i '/^"+Dname+"/d' "+self.filename)
-
-	conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+	#for ip in IPset:
+		#os.system("rsync -va --inplace --no-whole-file "+self.filename+" "+ip+":"+self.filename)
+	conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
 	cur = conn.cursor()
 	cur.execute("drop foreign table FT_"+rowid+" CASCADE;")
+	cur.execute("REFRESH MATERIALIZED VIEW opentable ;")
 	conn.commit()
 	conn.close()
 
@@ -119,8 +127,8 @@ class FDWwrite(ForeignDataWrapper):
         log_to_postgres("DELETING: %s" % rowid)
 
     def insert(self, values):
-	new_line = values['tid']+"\t"+values['表格名稱']+"\t"+values['原始資料格式']+"\t"+values['欄位']+"\t"+values['網址']+"\t"+values['描述']+"\t"+values['更新時間']+"\t"+values['csv_skip_header']+"\t"+values['csv_delimiter']+"\t"+values['elem_tag']
-	os.system("echo \""+(new_line).encode('utf-8').replace("\r","")+"\" >> "+ self.filename)
+	new_line = values['tid']+"\t"+values['表格名稱']+"\t"+values['原始資料格式']+"\t"+values['欄位']+"\t"+values['網址']+"\t"+values['描述']+"\t"+values['更新頻率']+"\t"+values['更新時間']+"\t"+values['csv_skip_header']+"\t"+values['csv_delimiter']+"\t"+values['elem_tag']
+	#os.system("echo \""+(new_line).encode('utf-8').replace("\r","")+"\" >> "+ self.filename)
 	sql_query = ""
 	if values['原始資料格式']=="csv":
 		sql_query = "create foreign table FT_"+(values['tid'])+"("+values['欄位'].replace("#"," ")+") server web_csv options (skip_header '"+values['csv_skip_header']+"', delimiter '"+values['csv_delimiter']+"',url '"+values['網址']+"');"
@@ -128,11 +136,18 @@ class FDWwrite(ForeignDataWrapper):
 		sql_query = "create foreign table FT_"+(values['tid'])+"("+values['欄位'].replace("#"," ")+") server Web_XML options (elem_tag '"+values['elem_tag']+"',url '"+values['網址']+"');"
 	if values['原始資料格式']=="json":
 		sql_query = "create foreign table FT_"+(values['tid'])+"("+values['欄位'].replace("#"," ")+") server Web_Json options (url '"+values['網址']+"');"
-	conn = psycopg2.connect(database="openpg", user="postgres", password="123456", host="127.0.0.1", port="5432")
+	conn = psycopg2.connect(database="openpg", user="guest", password="guest", host="127.0.0.1", port="5432")
         cur = conn.cursor()
         cur.execute(sql_query.encode('utf-8'))
 	cur.execute("CREATE MATERIALIZED VIEW "+values['tid']+" AS select * from FT_"+values['tid']+";")
-        conn.commit()
+	#cur.execute("REFRESH MATERIALIZED VIEW opentable ;")
+	try:
+        	conn.commit()
+		os.system("echo \""+(new_line).encode('utf-8').replace("\r","")+"\" >> "+ self.filename)
+		cur.execute("REFRESH MATERIALIZED VIEW opentable ;")
+		conn.commit()
+	except:
+		print "error"
         conn.close()
 	#os.system("echo \""+sql_query+"\" >> /home/postgres/qqq.txt")
     @property

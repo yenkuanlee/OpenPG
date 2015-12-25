@@ -24,8 +24,10 @@ class WebJson(ForeignDataWrapper):
 	c.perform()
 	c.close()
 	content = storage.getvalue()
-
-	j = json.loads(content, object_pairs_hook=OrderedDict)
+	try:
+		j = json.loads(content, object_pairs_hook=OrderedDict)
+	except :
+		return
         for x in j:
                 line=list()
                 for y in j[0].keys():
