@@ -14,25 +14,10 @@
 
 
 
-(1) master環境設定
 
-	安裝multicorn
+(1) master環境設定 (multicorn, git, make, pycurl, 程式移到multicorn目錄)
 
-	$ sudo apt-get install git -y
-
-	$ sudo apt-get install make -y
-
-	$ sudo aptitude install python-pycurl -y
-
-	將程式移到multicorn資料夾 (/usr/local/lib/python2.7/dist-packages/multicorn*/multicorn)
-
-		<1> FDWwrite.py
-
-		<2> WebCsvFdw.py
-
-		<3> WebJson.py
-
-		<4>	WebXML.py
+	$ sudo python InstallOnMaster.py
 
 
 	
