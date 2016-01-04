@@ -60,3 +60,11 @@
 	$ sudo service postgresql start
 	
 	$ psql -U guest -h 10.10.21.19 -d openpg
+	
+
+
+(6) 定期更新 (依照資料集的更新頻率做定期更新)
+
+	$ crontab -e
+	
+		*/1 * * * * python {PATH}/conditional_Update.py
